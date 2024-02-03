@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:EvernoteCloneWPF.View"
         xmlns:vm="clr-namespace:EvernoteCloneWPF.ViewModel"
         mc:Ignorable="d"
-        Title="NotesWindow" Height="300" Width="300">
+        Title="NotesWindow" Height="300" Width="500">
     <Window.Resources>
         <vm:NotesVM x:Key="vm" />
     </Window.Resources>
@@ -24,8 +24,26 @@
                           Click="MenuItem_OnClick_Exit"/>
             </MenuItem>
         </Menu>
-        <Grid>
-
-        </Grid>
+        <ListView DockPanel.Dock="Left"
+                  Width="140"
+                  ItemsSource="{Binding Notebooks}">
+            <DataTemplate>
+                <TextBlock Text="{Binding Name}" />
+            </DataTemplate>
+        </ListView>
+        <ListView DockPanel.Dock="Left"
+                  Width="140"
+                  ItemsSource="{Binding Notes}">
+            <DataTemplate>
+                <TextBlock Text="{Binding Title}" />
+            </DataTemplate>
+        </ListView>
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Button Content="Speech" 
+                        Click="SpeechButton_OnClick"/>
+            </ToolBar>
+        </ToolBarTray>
+        <Grid />
     </DockPanel>
 </Window>
