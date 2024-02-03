@@ -9,7 +9,7 @@ namespace EvernoteCloneWPF.ViewModel;
 
 public class NotesVM : INotifyPropertyChanged
 {
-    private Notebook _selectNotebook;
+    private Notebook _selectedNotebook;
 
     public ObservableCollection<Notebook> Notebooks { get; set; }
     public ObservableCollection<Note> Notes { get; set; }
@@ -17,10 +17,10 @@ public class NotesVM : INotifyPropertyChanged
     public NewNoteCommand NewNoteCommand { get; set; }
     public Notebook SelectedNotebook
 	{
-		get { return _selectNotebook; }
+		get { return _selectedNotebook; }
         set
         {
-            _selectNotebook = value;
+            _selectedNotebook = value;
             OnPropertyChanged("SelectedNotebook");
             GetNotes();
         }
@@ -30,7 +30,7 @@ public class NotesVM : INotifyPropertyChanged
 
     public NotesVM()
     {
-        NewNotebookCommand = new NewNotebookCommand(this);
+        NewNoteCommand = new NewNoteCommand(this);
         NewNotebookCommand = new NewNotebookCommand(this);
 
         Notebooks = new ObservableCollection<Notebook>();
@@ -43,7 +43,7 @@ public class NotesVM : INotifyPropertyChanged
     {
         Notebook newNotebook = new Notebook()
         {
-            Name = "New notebook"
+            Name = "Notebook"
         };
 
         DatabaseHelper.Insert(newNotebook);
@@ -94,7 +94,7 @@ public class NotesVM : INotifyPropertyChanged
         }
     }
 
-    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    protected virtual void OnPropertyChanged(string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }

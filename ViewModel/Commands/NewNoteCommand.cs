@@ -18,14 +18,12 @@ public class NewNoteCommand : ICommand
     {
         VM = vm;
     }
+
     public bool CanExecute(object? parameter)
     {
         Notebook selectedNotebook = parameter as Notebook;
-        if (selectedNotebook != null)
-        {
-            return true;
-        }
-        return false;
+        
+        return selectedNotebook != null ? true : false;
     }
 
     public void Execute(object? parameter)
