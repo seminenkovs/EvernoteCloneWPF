@@ -6,9 +6,12 @@
         xmlns:local="clr-namespace:EvernoteCloneWPF.View"
         xmlns:vm="clr-namespace:EvernoteCloneWPF.ViewModel"
         mc:Ignorable="d"
-        Title="NotesWindow" Height="300" Width="500">
+        Title="NotesWindow" Height="450" Width="800">
     <Window.Resources>
-        <vm:NotesVM x:Key="vm" />
+        <ResourceDictionary>
+            <vm:NotesVM x:Key="vm" />
+        </ResourceDictionary>
+        
     </Window.Resources>
 
     <DockPanel DataContext="{StaticResource vm}">
@@ -26,17 +29,23 @@
         </Menu>
         <ListView DockPanel.Dock="Left"
                   Width="140"
+                  SelectedValue="{Binding SelectedNotebook, Mode=TwoWay}"
                   ItemsSource="{Binding Notebooks}">
-            <DataTemplate>
-                <TextBlock Text="{Binding Name}" />
-            </DataTemplate>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            
         </ListView>
         <ListView DockPanel.Dock="Left"
                   Width="140"
                   ItemsSource="{Binding Notes}">
-            <DataTemplate>
-                <TextBlock Text="{Binding Title}" />
-            </DataTemplate>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Title}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
         <ToolBarTray DockPanel.Dock="Top">
             <ToolBar>

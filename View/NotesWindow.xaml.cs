@@ -31,7 +31,7 @@ namespace EvernoteCloneWPF.View
 
         private void SpeechButton_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

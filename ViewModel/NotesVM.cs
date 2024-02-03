@@ -47,6 +47,8 @@ public class NotesVM : INotifyPropertyChanged
         };
 
         DatabaseHelper.Insert(newNotebook);
+
+        GetNotebooks();
     }
 
     public void CreateNote(int notebookId)
@@ -60,6 +62,8 @@ public class NotesVM : INotifyPropertyChanged
         };
 
         DatabaseHelper.Insert(newNote);
+
+        GetNotes();
     }
 
     private void GetNotebooks()
