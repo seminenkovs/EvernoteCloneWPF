@@ -68,4 +68,17 @@ public class NotesVM
             Notebooks.Add(notebook);
         }
     }
+
+    private void GetNotes()
+    {
+        var notes = DatabaseHelper.Read<Note>()
+            .Where(n => n.NoteBookId == SelectedNotebook.Id);
+
+        Notes.Clear();
+
+        foreach (var note in notes)
+        {
+            Notes.Add(note);
+        }
+    }
 }
