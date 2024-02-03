@@ -58,7 +58,7 @@ public class NotesVM : INotifyPropertyChanged
             NoteBookId = notebookId,
             CreatedAt = DateTime.Now,
             UpdatedAt = DateTime.Now,
-            Title = "New Note"
+            Title = $"Note for {DateTime.Now.ToString()}"
         };
 
         DatabaseHelper.Insert(newNote);
