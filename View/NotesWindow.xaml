@@ -4,9 +4,28 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EvernoteCloneWPF.View"
+        xmlns:vm="clr-namespace:EvernoteCloneWPF.ViewModel"
         mc:Ignorable="d"
-        Title="NotesWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="NotesWindow" Height="300" Width="300">
+    <Window.Resources>
+        <vm:NotesVM x:Key="vm" />
+    </Window.Resources>
+
+    <DockPanel DataContext="{StaticResource vm}">
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="New notebook"
+                          Command="{Binding NewNotebookCommand}"/>
+                <MenuItem Header="New note"
+                          Command="{Binding NewNoteCommand}"
+                          CommandParameter="{Binding SelectedNotebook}"/>
+                <Separator />
+                <MenuItem Header="Exit" 
+                          Click="MenuItem_OnClick_Exit"/>
+            </MenuItem>
+        </Menu>
+        <Grid>
+
+        </Grid>
+    </DockPanel>
 </Window>

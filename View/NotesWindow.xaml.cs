@@ -23,5 +23,10 @@ namespace EvernoteCloneWPF.View
         {
             InitializeComponent();
         }
+
+        private void MenuItem_OnClick_Exit(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }

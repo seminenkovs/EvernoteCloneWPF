@@ -21,5 +21,6 @@ public class NewNotebookCommand : ICommand
     public void Execute(object? parameter)
     {
         //TODO: create new notebook
+        VM.CreateNotebook();
     }
 }

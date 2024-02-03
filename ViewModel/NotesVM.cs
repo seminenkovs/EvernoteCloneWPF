@@ -1,25 +1,19 @@
 ﻿using System.Collections.ObjectModel;
 using EvernoteCloneWPF.Model;
 using EvernoteCloneWPF.ViewModel.Commands;
+using EvernoteCloneWPF.ViewModel.Helpers;
 
 namespace EvernoteCloneWPF.ViewModel;
 
 public class NotesVM
 {
+    private Notebook _selectNotebook;
+
     public ObservableCollection<Notebook> Notebooks { get; set; }
     public ObservableCollection<Note> Notes { get; set; }
     public NewNotebookCommand NewNotebookCommand { get; set; }
     public NewNoteCommand NewNoteCommand { get; set; }
-
-    public NotesVM()
-    {
-        NewNotebookCommand = new NewNotebookCommand(this);
-        NewNotebookCommand = new NewNotebookCommand(this);
-    }
-
-	private Notebook _selectNotebook;
-
-	public Notebook SelectedNotebook
+    public Notebook SelectedNotebook
 	{
 		get { return _selectNotebook; }
         set
@@ -29,6 +23,32 @@ public class NotesVM
         }
 	}
 
+    public NotesVM()
+    {
+        NewNotebookCommand = new NewNotebookCommand(this);
+        NewNotebookCommand = new NewNotebookCommand(this);
+    }
 
+    public void CreateNotebook()
+    {
+        Notebook newNotebook = new Notebook()
+        {
+            Name = "New notebook"
+        };
 
+        DatabaseHelper.Insert(newNotebook);
+    }
+
+    public void CreateNote(int notebookId)
+    {
+        Note newNote = new Note()
+        {
+            NoteBookId = notebookId,
+            CreatedAt = DateTime.Now,
+            UpdatedAt = DateTime.Now,
+            Title = "New Note"
+        };
+
+        DatabaseHelper.Insert(newNote);
+    }
 }
