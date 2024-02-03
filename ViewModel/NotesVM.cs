@@ -1,11 +1,13 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using EvernoteCloneWPF.Model;
 using EvernoteCloneWPF.ViewModel.Commands;
 using EvernoteCloneWPF.ViewModel.Helpers;
 
 namespace EvernoteCloneWPF.ViewModel;
 
-public class NotesVM
+public class NotesVM : INotifyPropertyChanged
 {
     private Notebook _selectNotebook;
 
@@ -19,9 +21,12 @@ public class NotesVM
         set
         {
             _selectNotebook = value;
-            //TODO: get notes
+            OnPropertyChanged("SelectedNotebook");
+            GetNotes();
         }
 	}
+
+    public event PropertyChangedEventHandler? PropertyChanged;
 
     public NotesVM()
     {
@@ -71,14 +76,22 @@ public class NotesVM
 
     private void GetNotes()
     {
-        var notes = DatabaseHelper.Read<Note>()
-            .Where(n => n.NoteBookId == SelectedNotebook.Id);
-
-        Notes.Clear();
-
-        foreach (var note in notes)
+        if (SelectedNotebook != null)
         {
-            Notes.Add(note);
+            var notes = DatabaseHelper.Read<Note>()
+                .Where(n => n.NoteBookId == SelectedNotebook.Id).ToList();
+
+            Notes.Clear();
+
+            foreach (var note in notes)
+            {
+                Notes.Add(note);
+            }
         }
+    }
+
+    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }
