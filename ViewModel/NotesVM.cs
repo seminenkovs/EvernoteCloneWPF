@@ -27,6 +27,11 @@ public class NotesVM
     {
         NewNotebookCommand = new NewNotebookCommand(this);
         NewNotebookCommand = new NewNotebookCommand(this);
+
+        Notebooks = new ObservableCollection<Notebook>();
+        Notes = new ObservableCollection<Note>();
+
+        GetNotebooks();
     }
 
     public void CreateNotebook()
@@ -50,5 +55,17 @@ public class NotesVM
         };
 
         DatabaseHelper.Insert(newNote);
+    }
+
+    private void GetNotebooks()
+    {
+        var notebooks = DatabaseHelper.Read<Notebook>();
+
+        Notebooks.Clear();
+
+        foreach (var notebook in notebooks)
+        {
+            Notebooks.Add(notebook);
+        }
     }
 }
