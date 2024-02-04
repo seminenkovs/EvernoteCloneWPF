@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Microsoft.CognitiveServices.Speech;
+using Microsoft.CognitiveServices.Speech.Audio;
 
 namespace EvernoteCloneWPF.View
 {
@@ -29,9 +31,22 @@ namespace EvernoteCloneWPF.View
             Application.Current.Shutdown();
         }
 
-        private void SpeechButton_OnClick(object sender, RoutedEventArgs e)
+        private async void SpeechButton_OnClick(object sender, RoutedEventArgs e)
         {
-            
+            // TODO: get region and key for evernote speech to text
+            string region = "";
+            string key = "";
+
+            var speechConfig = SpeechConfig.FromSubscription(key, region);
+            using (var audioConfig = AudioConfig.FromDefaultMicrophoneInput())
+            {
+                using (var recognizer = new SpeechRecognizer(speechConfig, audioConfig))
+                {
+                    var result = await recognizer.RecognizeOnceAsync();
+                    contentRichTextBox.Document.Blocks.Add(new Paragraph(
+                        new Run(result.Text)));
+                }
+            }
         }
 
         private void ContentRichTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
