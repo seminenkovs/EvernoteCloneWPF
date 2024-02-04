@@ -26,9 +26,16 @@
                           Click="MenuItem_OnClick_Exit"/>
             </MenuItem>
         </Menu>
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem>
+                <TextBlock x:Name="statusTextBlock" />
+            </StatusBarItem>
+        </StatusBar>
         <ListView DockPanel.Dock="Left"
                   Width="140"
-                  SelectedValue="{Binding SelectedNotebook, Mode=TwoWay}"
+                  SelectedValue="{Binding SelectedNotebook,
+                                            Mode=TwoWay,
+                                            UpdateSourceTrigger=PropertyChanged}"
                   ItemsSource="{Binding Notebooks}">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -50,8 +57,16 @@
             <ToolBar>
                 <Button Content="Speech" 
                         Click="SpeechButton_OnClick"/>
+                <Button x:Name="boldButton" 
+                        Click="BoldButton_OnClick">
+                    <TextBlock Text="B"
+                               FontWeight="Bold"/>
+                </Button>
             </ToolBar>
         </ToolBarTray>
-        <Grid />
+        <Grid>
+            <RichTextBox x:Name="contentRichTextBox"
+                         TextChanged="ContentRichTextBox_OnTextChanged"/>
+        </Grid>
     </DockPanel>
 </Window>
