@@ -126,6 +126,52 @@ namespace EvernoteCloneWPF.View
                 .GetPropertyValue(FontWeightProperty);
             boldButton.IsChecked = (selectedWeight != DependencyProperty.UnsetValue) &&
                                    (selectedWeight.Equals(FontWeights.Bold));
+
+            var selectedStyle = contentRichTextBox.Selection.GetPropertyValue(
+                Inline.FontStyleProperty);
+            italicButton.IsChecked = (selectedStyle != DependencyProperty.UnsetValue) &&
+                                     (selectedStyle.Equals(FontStyles.Italic));
+
+            var selectedDecoration = contentRichTextBox.Selection.GetPropertyValue(
+                Inline.TextDecorationsProperty);
+            underlineButton.IsChecked = (selectedDecoration != DependencyProperty.UnsetValue) &&
+                                        (selectedDecoration.Equals(TextDecorations.Underline));
+        }
+
+        private void ItalicButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            bool isButtonEnabled = (sender as ToggleButton).IsChecked ?? false;
+
+            if (isButtonEnabled)
+            {
+                contentRichTextBox.Selection.ApplyPropertyValue(Inline.FontStyleProperty,
+                    FontStyles.Italic);
+            }
+            else
+            {
+                contentRichTextBox.Selection.ApplyPropertyValue(Inline.FontStyleProperty,
+                    FontStyles.Normal);
+            }
+        }
+
+        private void UnderlineButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            bool isButtonEnabled = (sender as ToggleButton).IsChecked ?? false;
+
+            if (isButtonEnabled)
+            {
+                contentRichTextBox.Selection.ApplyPropertyValue(Inline.TextDecorationsProperty,
+                    TextDecorations.Underline);
+            }
+            else
+            {
+                TextDecorationCollection textDecorations;
+                (contentRichTextBox.Selection.GetPropertyValue(Inline.TextDecorationsProperty)
+                    as TextDecorationCollection).TryRemove(TextDecorations.Underline,
+                    out textDecorations);
+                contentRichTextBox.Selection.ApplyPropertyValue(Inline.TextDecorationsProperty,
+                    textDecorations);
+            }
         }
     }
 }
