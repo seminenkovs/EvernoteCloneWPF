@@ -42,7 +42,13 @@ namespace EvernoteCloneWPF.View
             //_recognizer.LoadGrammar(grammar);
             //_recognizer.SetInputToDefaultAudioDevice();
             //_recognizer.SpeechRecognized += Recognizer_SpeechRecognized;
-            #endregion 
+            #endregion
+
+            var fontFamilies = Fonts.SystemFontFamilies.OrderBy(f => f.Source);
+            fontFamilyComboBox.ItemsSource = fontFamilies;
+
+            List<double> fontSizes =new List<double>() {8, 9, 10, 11, 12, 14, 16, 28, 46};
+            fontSizeComboBox.ItemsSource = fontSizes;
         }
 
         private void Recognizer_SpeechRecognized(object? sender, SpeechRecognizedEventArgs e)
@@ -136,6 +142,12 @@ namespace EvernoteCloneWPF.View
                 Inline.TextDecorationsProperty);
             underlineButton.IsChecked = (selectedDecoration != DependencyProperty.UnsetValue) &&
                                         (selectedDecoration.Equals(TextDecorations.Underline));
+
+            fontFamilyComboBox.SelectedItem = contentRichTextBox.Selection.GetPropertyValue(
+                Inline.FontFamilyProperty);
+
+            fontSizeComboBox.Text = (contentRichTextBox.Selection.GetPropertyValue(
+                Inline.FontSizeProperty)).ToString();
         }
 
         private void ItalicButton_OnClick(object sender, RoutedEventArgs e)
@@ -176,12 +188,17 @@ namespace EvernoteCloneWPF.View
 
         private void FontFamilyCombox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            throw new NotImplementedException();
+            if (fontFamilyComboBox.SelectedItem != null)
+            {
+                contentRichTextBox.Selection.ApplyPropertyValue(Inline.FontFamilyProperty,
+                    fontFamilyComboBox.SelectedItem);
+            }
         }
 
         private void FontSizeComboBox_OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            throw new NotImplementedException();
+            contentRichTextBox.Selection.ApplyPropertyValue(Inline.FontSizeProperty,
+                fontSizeComboBox.Text);
         }
     }
 }

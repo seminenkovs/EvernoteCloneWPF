@@ -72,7 +72,7 @@
                     <TextBlock Text="U"
                                TextDecorations="Underline"/>
                 </ToggleButton>
-                <ComboBox x:Name="fontFamilyCombox" 
+                <ComboBox x:Name="fontFamilyComboBox" 
                           Width = "100"
                           SelectionChanged="FontFamilyCombox_OnSelectionChanged"/>
                 <ComboBox x:Name="fontSizeComboBox"
