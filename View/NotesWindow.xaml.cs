@@ -173,5 +173,15 @@ namespace EvernoteCloneWPF.View
                     textDecorations);
             }
         }
+
+        private void FontFamilyCombox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void FontSizeComboBox_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
