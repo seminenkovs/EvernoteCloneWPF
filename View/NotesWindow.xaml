@@ -7,7 +7,7 @@
         xmlns:vm="clr-namespace:EvernoteCloneWPF.ViewModel"
         xmlns:uc="clr-namespace:EvernoteCloneWPF.View.UserControls"
         mc:Ignorable="d"
-        Title="NotesWindow" Height="450" Width="800">
+        Title="NotesWindow" Height="450" Width="900">
     <Window.Resources>
         <ResourceDictionary>
             <vm:NotesVM x:Key="vm" />
@@ -34,7 +34,7 @@
         </StatusBar>
         <ListView DockPanel.Dock="Left"
                   Background="MidnightBlue"
-                  Width="140"
+                  Width="200"
                   SelectedValue="{Binding SelectedNotebook,
                                             Mode=TwoWay,
                                             UpdateSourceTrigger=PropertyChanged}"
@@ -47,11 +47,11 @@
             
         </ListView>
         <ListView DockPanel.Dock="Left"
-                  Width="140"
+                  Width="260"
                   ItemsSource="{Binding Notes}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Title}" />
+                    <uc:DisplayNote Note="{Binding}" />
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
