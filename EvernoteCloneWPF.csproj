@@ -16,7 +16,6 @@
 
   <ItemGroup>
     <Folder Include="ViewModel\Helpers\" />
-    <Folder Include="ViewModel\Commands\" />
   </ItemGroup>
 
 </Project>

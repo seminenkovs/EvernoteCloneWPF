@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using EvernoteCloneWPF.Model;
 using EvernoteCloneWPF.ViewModel.Commands;
 using EvernoteCloneWPF.ViewModel.Helpers;
@@ -15,6 +16,7 @@ public class NotesVM : INotifyPropertyChanged
     public ObservableCollection<Note> Notes { get; set; }
     public NewNotebookCommand NewNotebookCommand { get; set; }
     public NewNoteCommand NewNoteCommand { get; set; }
+    public EditCommand EditCommand { get; set; }
     public Notebook SelectedNotebook
 	{
 		get { return _selectedNotebook; }
@@ -26,15 +28,31 @@ public class NotesVM : INotifyPropertyChanged
         }
 	}
 
+    private Visibility _isVisible;
+
+    public Visibility  IsVisible
+    {
+        get { return _isVisible; }
+        set
+        {
+            _isVisible = value;
+            OnPropertyChanged("IsVisible");
+        }
+    }
+
+
     public event PropertyChangedEventHandler? PropertyChanged;
 
     public NotesVM()
     {
         NewNoteCommand = new NewNoteCommand(this);
         NewNotebookCommand = new NewNotebookCommand(this);
+        EditCommand = new EditCommand(this);
 
         Notebooks = new ObservableCollection<Notebook>();
         Notes = new ObservableCollection<Note>();
+
+        IsVisible = Visibility.Collapsed;
 
         GetNotebooks();
     }
@@ -97,5 +115,10 @@ public class NotesVM : INotifyPropertyChanged
     protected virtual void OnPropertyChanged(string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    public void StartEditing()
+    {
+        IsVisible = Visibility.Visible;
     }
 }

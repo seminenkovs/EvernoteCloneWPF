@@ -10,7 +10,7 @@
         <TextBlock Text="{Binding Name}" 
                    Foreground="White"
                    Margin="15"
-                   FontSize="20"
+                   FontSize="16"
                    FontWeight="Bold"
                    VerticalAlignment="Center"/>
     </StackPanel>
