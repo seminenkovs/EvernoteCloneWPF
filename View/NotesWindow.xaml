@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:EvernoteCloneWPF.View"
         xmlns:vm="clr-namespace:EvernoteCloneWPF.ViewModel"
         xmlns:uc="clr-namespace:EvernoteCloneWPF.View.UserControls"
@@ -53,7 +54,16 @@
                         </uc:DisplayNotebook>
                         <TextBox Text="{Binding Name, Mode=TwoWay}" 
                                  Visibility="{Binding Source={StaticResource vm},
-                                            Path=IsVisible}"/>
+                                            Path=IsVisible}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="LostFocus">
+                                    <i:InvokeCommandAction Command="{Binding
+                                        Source={StaticResource vm}, 
+                                        Path=EndEditingCommand}"
+                                        CommandParameter="{Binding}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
                     </Grid>
                     </DataTemplate>
             </ListView.ItemTemplate>
@@ -61,6 +71,9 @@
         </ListView>
         <ListView DockPanel.Dock="Left"
                   Width="260"
+                  SelectedValue="{Binding SelectedNote,
+                          Mode=TwoWay,
+                          UpdateSourceTrigger=PropertyChanged}"
                   ItemsSource="{Binding Notes}">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -94,6 +107,8 @@
                           Width="50"
                           IsEditable="True" 
                           TextBoxBase.TextChanged="FontSizeComboBox_OnTextChanged"/>
+                <Button Content="Save" 
+                        Click="SaveButton_OnClick"/>
             </ToolBar>
         </ToolBarTray>
         <Grid>

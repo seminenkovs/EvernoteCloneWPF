@@ -29,6 +29,19 @@ public class NotesVM : INotifyPropertyChanged
         }
 	}
 
+    private Note _selectedNote;
+
+    public Note SelectedNote
+    {
+        get { return _selectedNote; }
+        set
+        {
+            _selectedNote = value;
+            OnPropertyChanged("SelectedNote");
+        }
+    }
+
+
     private Visibility _isVisible;
 
     public Visibility  IsVisible
@@ -38,11 +51,13 @@ public class NotesVM : INotifyPropertyChanged
         {
             _isVisible = value;
             OnPropertyChanged("IsVisible");
+            SelectedNoteChanged?.Invoke(this, new EventArgs());
         }
     }
 
 
     public event PropertyChangedEventHandler? PropertyChanged;
+    public event EventHandler SelectedNoteChanged;
 
     public NotesVM()
     {
