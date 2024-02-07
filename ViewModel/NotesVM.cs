@@ -17,6 +17,7 @@ public class NotesVM : INotifyPropertyChanged
     public NewNotebookCommand NewNotebookCommand { get; set; }
     public NewNoteCommand NewNoteCommand { get; set; }
     public EditCommand EditCommand { get; set; }
+    public EndEditingCommand EndEditingCommand { get; set; }
     public Notebook SelectedNotebook
 	{
 		get { return _selectedNotebook; }
@@ -48,6 +49,7 @@ public class NotesVM : INotifyPropertyChanged
         NewNoteCommand = new NewNoteCommand(this);
         NewNotebookCommand = new NewNotebookCommand(this);
         EditCommand = new EditCommand(this);
+        EndEditingCommand = new EndEditingCommand(this);
 
         Notebooks = new ObservableCollection<Notebook>();
         Notes = new ObservableCollection<Note>();
