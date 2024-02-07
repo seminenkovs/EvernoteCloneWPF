@@ -126,5 +126,6 @@ public class NotesVM : INotifyPropertyChanged
     {
         IsVisible = Visibility.Collapsed;
         DatabaseHelper.Update(notebook);
+        GetNotebooks();
     }
 }
