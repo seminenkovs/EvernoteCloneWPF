@@ -9,6 +9,7 @@ namespace EvernoteCloneWPF
     /// </summary>
     public partial class App : Application
     {
+        public static string UserId = string.Empty;
     }
 
 }

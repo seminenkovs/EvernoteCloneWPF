@@ -10,14 +10,14 @@ namespace EvernoteCloneWPF.ViewModel;
 
 public class NotesVM : INotifyPropertyChanged
 {
-    private Notebook _selectedNotebook;
-
     public ObservableCollection<Notebook> Notebooks { get; set; }
     public ObservableCollection<Note> Notes { get; set; }
     public NewNotebookCommand NewNotebookCommand { get; set; }
     public NewNoteCommand NewNoteCommand { get; set; }
     public EditCommand EditCommand { get; set; }
     public EndEditingCommand EndEditingCommand { get; set; }
+
+    private Notebook _selectedNotebook;
     public Notebook SelectedNotebook
 	{
 		get { return _selectedNotebook; }
@@ -38,9 +38,9 @@ public class NotesVM : INotifyPropertyChanged
         {
             _selectedNote = value;
             OnPropertyChanged("SelectedNote");
+            SelectedNoteChanged?.Invoke(this, new EventArgs());
         }
     }
-
 
     private Visibility _isVisible;
 
@@ -51,7 +51,6 @@ public class NotesVM : INotifyPropertyChanged
         {
             _isVisible = value;
             OnPropertyChanged("IsVisible");
-            SelectedNoteChanged?.Invoke(this, new EventArgs());
         }
     }
 
@@ -101,7 +100,7 @@ public class NotesVM : INotifyPropertyChanged
         GetNotes();
     }
 
-    private void GetNotebooks()
+    public void GetNotebooks()
     {
         var notebooks = DatabaseHelper.Read<Notebook>();
 
