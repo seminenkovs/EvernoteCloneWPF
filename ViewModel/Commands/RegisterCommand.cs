@@ -6,11 +6,11 @@ public class RegisterCommand : ICommand
 {
     public event EventHandler? CanExecuteChanged;
 
-    public LoginVM VM { get; set; }
+    public LoginVM ViewModel { get; set; }
 
-    public RegisterCommand(LoginVM vm)
+    public RegisterCommand(LoginVM viewModel)
     {
-        VM = vm;
+        ViewModel = viewModel;
     }
 
     public bool CanExecute(object? parameter)
@@ -20,6 +20,6 @@ public class RegisterCommand : ICommand
 
     public void Execute(object? parameter)
     {
-        //TODO loging functionality
+        ViewModel.Register();
     }
 }
