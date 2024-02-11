@@ -6,11 +6,11 @@ public class LoginCommand : ICommand
 {
     public event EventHandler? CanExecuteChanged;
 
-    public LoginVM VM { get; set; }
+    public LoginVM ViewModel { get; set; }
 
     public LoginCommand(LoginVM vm)
     {
-        VM = vm;
+        ViewModel = vm;
     }
 
     public bool CanExecute(object? parameter)
@@ -20,6 +20,6 @@ public class LoginCommand : ICommand
 
     public void Execute(object? parameter)
     {
-        //TODO login functionality
+        ViewModel.Login();
     }
 }
