@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using EvernoteCloneWPF.Model;
 using EvernoteCloneWPF.ViewModel.Commands;
+using EvernoteCloneWPF.ViewModel.Helpers;
 
 namespace EvernoteCloneWPF.ViewModel;
 
@@ -177,9 +178,9 @@ public class LoginVM : INotifyPropertyChanged
         //Todo: Login
     }
 
-    public void Register()
+    public async void Register()
     {
-        
+        await FirebaseAuthHelper.Register(User);
     }
 
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)

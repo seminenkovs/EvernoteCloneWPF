@@ -17,7 +17,7 @@ public class FirebaseAuthHelper
         {
             var body = new
             {
-                eamil = user.UserName,
+                email = user.UserName,
                 password = user.Password,
                 returnSecureToken = true
             };
