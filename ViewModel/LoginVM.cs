@@ -179,7 +179,7 @@ public class LoginVM : INotifyPropertyChanged
 
     public void Register()
     {
-        //Todo: Register
+        
     }
 
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
