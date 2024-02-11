@@ -175,7 +175,7 @@ public class LoginVM : INotifyPropertyChanged
 
     public void Login()
     {
-        Fir
+        FirebaseAuthHelper.Login(User);
     }
 
     public async void Register()
