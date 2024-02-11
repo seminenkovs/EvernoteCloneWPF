@@ -14,7 +14,13 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid DataContext="{StaticResource vm}">
-        <StackPanel Visibility="{Binding LoginVisibility}">
+        <StackPanel Visibility="{Binding LoginVisibility}"
+                    Margin="15">
+            <TextBlock Text="Username:" />
+            <TextBox Text="{Binding User.UserName}"/>
+            <TextBlock Text="Password:" />
+            <TextBox Text="{Binding User.Password}"/>
+            <Button Command="{Binding LoginCommand}" />
             <TextBlock Text="Register" 
                        Foreground="DodgerBlue"
                        TextDecorations="Underline"/>
