@@ -20,7 +20,10 @@
             <TextBox Text="{Binding User.UserName}"/>
             <TextBlock Text="Password:" />
             <TextBox Text="{Binding User.Password}"/>
-            <Button Command="{Binding LoginCommand}" />
+            <Button Command="{Binding LoginCommand}"
+                    CommandParameter="{Binding User}"
+                    Margin="0, 5"
+                    Content="Login"/>
             <TextBlock Text="Register" 
                        Foreground="DodgerBlue"
                        TextDecorations="Underline"/>
@@ -31,6 +34,20 @@
             </i:Interaction.Triggers>
         </StackPanel>
         <StackPanel Visibility="{Binding RegisterVisibility}">
+            <TextBlock Text="Username:" />
+            <TextBox Text="{Binding User.UserName}"/>
+            <TextBlock Text="Name:" />
+            <TextBox Text="{Binding User.Name}"/>
+            <TextBlock Text="Last Name:" />
+            <TextBox Text="{Binding User.LastName}"/>
+            <TextBlock Text="Password:" />
+            <TextBox Text="{Binding User.Password}"/>
+            <TextBlock Text="Confirm Password:" />
+            <TextBox Text="{Binding User.ConfirmPassword}"/>
+            <Button Command="{Binding RegisterCommand}"
+                    CommandParameter="{Binding User}"
+                    Margin="0, 5"
+                    Content="Login"/>
             <TextBlock Text="Login"
                        Foreground="DodgerBlue"
                        TextDecorations="Underline">
