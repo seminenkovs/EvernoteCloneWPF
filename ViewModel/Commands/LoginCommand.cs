@@ -17,16 +17,15 @@ public class LoginCommand : ICommand
     public bool CanExecute(object? parameter)
     {
         User user = parameter as User;
+
         if (user == null)
         {
             return false;
         }
-
         if (string.IsNullOrEmpty(user.UserName))
         {
             return false;
         }
-
         if (string.IsNullOrEmpty(user.Password))
         {
             return false;
