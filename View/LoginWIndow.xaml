@@ -7,7 +7,7 @@
         xmlns:vm="clr-namespace:EvernoteCloneWPF.ViewModel"
         xmlns:local="clr-namespace:EvernoteCloneWPF.View"
         mc:Ignorable="d"
-        Title="LoginWIndow" Height="450" Width="800">
+        Title="LoginWIndow" Height="450" Width="450">
     <Window.Resources>
         <ResourceDictionary>
             <vm:LoginVM x:Key="vm" />
@@ -17,9 +17,11 @@
         <StackPanel Visibility="{Binding LoginVisibility}"
                     Margin="15">
             <TextBlock Text="Username:" />
-            <TextBox Text="{Binding User.UserName}"/>
+            <TextBox Text="{Binding UserName, Mode=TwoWay,
+                                    UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock Text="Password:" />
-            <TextBox Text="{Binding User.Password}"/>
+            <TextBox Text="{Binding Password, Mode=TwoWay,
+                                    UpdateSourceTrigger=PropertyChanged}"/>
             <Button Command="{Binding LoginCommand}"
                     CommandParameter="{Binding User}"
                     Margin="0, 5"
@@ -35,19 +37,24 @@
         </StackPanel>
         <StackPanel Visibility="{Binding RegisterVisibility}">
             <TextBlock Text="Username:" />
-            <TextBox Text="{Binding User.UserName}"/>
+            <TextBox Text="{Binding UserName, Mode=TwoWay,
+                                    UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock Text="Name:" />
-            <TextBox Text="{Binding User.Name}"/>
+            <TextBox Text="{Binding Name, Mode=TwoWay,
+                                    UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock Text="Last Name:" />
-            <TextBox Text="{Binding User.LastName}"/>
+            <TextBox Text="{Binding LastName, Mode=TwoWay,
+                                    UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock Text="Password:" />
-            <TextBox Text="{Binding User.Password}"/>
+            <TextBox Text="{Binding Password, Mode=TwoWay,
+                                    UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock Text="Confirm Password:" />
-            <TextBox Text="{Binding User.ConfirmPassword}"/>
+            <TextBox Text="{Binding ConfirmPassword, Mode=TwoWay,
+                                    UpdateSourceTrigger=PropertyChanged}"/>
             <Button Command="{Binding RegisterCommand}"
                     CommandParameter="{Binding User}"
                     Margin="0, 5"
-                    Content="Login"/>
+                    Content="Register"/>
             <TextBlock Text="Login"
                        Foreground="DodgerBlue"
                        TextDecorations="Underline">

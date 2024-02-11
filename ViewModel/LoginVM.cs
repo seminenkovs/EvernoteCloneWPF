@@ -14,12 +14,15 @@ public class LoginVM : INotifyPropertyChanged
     public User User
 	{
 		get { return _user; }
-		set { _user = value; }
+        set
+        {
+            _user = value;
+            OnPropertyChanged("User");
+        }
 	}
 
 	private Visibility _loginVisibility;
-
-	public Visibility LoginVisibility
+    public Visibility LoginVisibility
 	{
 		get { return _loginVisibility; }
         set
@@ -30,7 +33,6 @@ public class LoginVM : INotifyPropertyChanged
 	}
 
     private Visibility _registerVisibility;
-
     public Visibility RegisterVisibility
     {
         get { return _registerVisibility; }
@@ -41,6 +43,100 @@ public class LoginVM : INotifyPropertyChanged
         }
     }
 
+    private string _username;
+    public string UserName
+    {
+        get { return _username; }
+        set
+        {
+            _username = value;
+            User = new User
+            {
+                UserName = _username,
+                Password = this.Password,
+                Name = this.Name,
+                LastName = this.LastName,
+                ConfirmPassword = this.ConfirmPassword
+            };
+            OnPropertyChanged("Username");
+        }
+    }
+
+    private string _password;
+    public string Password
+    {
+        get { return _password; }
+        set
+        {
+            _password = value;
+            User = new User
+            {
+                UserName = this.UserName,
+                Password = _password,
+                Name = this.Name,
+                LastName = this.LastName,
+                ConfirmPassword = this.ConfirmPassword
+            };
+            OnPropertyChanged("Password");
+        }
+    }
+
+    private string _name;
+    public string Name
+    {
+        get { return _name; }
+        set
+        {
+            _name = value;
+            User = new User
+            {
+                UserName = this.UserName,
+                Password = this.Password,
+                Name = _name,
+                LastName = this.LastName,
+                ConfirmPassword = this.ConfirmPassword
+            };
+            OnPropertyChanged("Name");
+        }
+    }
+
+    private string _lastName;
+    public string LastName
+    {
+        get { return _lastName; }
+        set
+        {
+            _lastName = value;
+            User = new User
+            {
+                UserName = this.UserName,
+                Password = this.Password,
+                Name = this.Name,
+                LastName = _lastName,
+                ConfirmPassword = this.ConfirmPassword
+            };
+            OnPropertyChanged("LastName");
+        }
+    }
+
+    private string _confirmPassword;
+    public string ConfirmPassword
+    {
+        get { return _confirmPassword; }
+        set
+        {
+            _confirmPassword = value;
+            User = new User
+            {
+                UserName = this.UserName,
+                Password = this.Password,
+                Name = this.Name,
+                LastName = this.LastName,
+                ConfirmPassword = _confirmPassword
+            };
+            OnPropertyChanged("ConfirmPassword");
+        }
+    }
 
     public RegisterCommand RegisterCommand { get; set; }
 	public LoginCommand LoginCommand { get; set; }
@@ -56,6 +152,8 @@ public class LoginVM : INotifyPropertyChanged
         RegisterCommand = new RegisterCommand(this);
 		LoginCommand = new LoginCommand(this);
         ShowRegisterCommand = new ShowRegisterCommand(this);
+
+        User = new User();
     }
 
     public void SwitchViews()
