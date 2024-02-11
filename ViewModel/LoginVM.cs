@@ -144,6 +144,7 @@ public class LoginVM : INotifyPropertyChanged
     public ShowRegisterCommand ShowRegisterCommand { get; set; }
 
     public event PropertyChangedEventHandler? PropertyChanged;
+    public event EventHandler Authenticated;
 
     public LoginVM()
     {
@@ -173,14 +174,24 @@ public class LoginVM : INotifyPropertyChanged
         }
     }
 
-    public void Login()
+    public async void Login()
     {
-        FirebaseAuthHelper.Login(User);
+        bool result = await FirebaseAuthHelper.Login(User);
+
+        if (result)
+        {
+            Authenticated?.Invoke(this, new EventArgs());
+        }
     }
 
     public async void Register()
     {
-        await FirebaseAuthHelper.Register(User);
+        bool result = await FirebaseAuthHelper.Register(User);
+
+        if (result)
+        {
+            Authenticated?.Invoke(this, new EventArgs());
+        }
     }
 
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)

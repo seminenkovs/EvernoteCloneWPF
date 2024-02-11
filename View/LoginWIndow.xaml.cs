@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using EvernoteCloneWPF.ViewModel;
 
 namespace EvernoteCloneWPF.View
 {
@@ -19,9 +20,19 @@ namespace EvernoteCloneWPF.View
     /// </summary>
     public partial class LoginWIndow : Window
     {
+        private LoginVM viewModel;
+
         public LoginWIndow()
         {
             InitializeComponent();
+
+            viewModel = Resources["vm"] as LoginVM;
+            viewModel.Authenticated += ViewModel_Authenticated;
+        }
+
+        private void ViewModel_Authenticated(object? sender, EventArgs e)
+        {
+            Close();
         }
     }
 }
