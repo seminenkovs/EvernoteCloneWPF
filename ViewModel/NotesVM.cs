@@ -77,7 +77,8 @@ public class NotesVM : INotifyPropertyChanged
     {
         Notebook newNotebook = new Notebook()
         {
-            Name = "Notebook"
+            Name = "Notebook",
+            UserId = App.UserId
         };
 
         DatabaseHelper.Insert(newNotebook);
@@ -102,7 +103,8 @@ public class NotesVM : INotifyPropertyChanged
 
     public void GetNotebooks()
     {
-        var notebooks = DatabaseHelper.Read<Notebook>();
+        var notebooks = DatabaseHelper.Read<Notebook>()
+            .Where(n => n.UserId == App.UserId).ToList();
 
         Notebooks.Clear();
 
