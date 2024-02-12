@@ -1,4 +1,7 @@
 ﻿using System.IO;
+using System.Net.Http;
+using System.Text;
+using Newtonsoft.Json;
 using SQLite;
 
 namespace EvernoteCloneWPF.ViewModel.Helpers;
@@ -6,22 +9,44 @@ namespace EvernoteCloneWPF.ViewModel.Helpers;
 public class DatabaseHelper
 {
     private static string _dbFile = Path.Combine(Environment.CurrentDirectory, "notesDb.db3");
+    private static string _dbPath = "https://notes-app-wpf-821ff-default-rtdb.firebaseio.com/";
 
-    public static bool Insert<T>(T item)
+    public static async Task<bool> Insert<T>(T item)
     {
-        bool result = false;
+        #region SQLiteConnection
 
-        using (SQLiteConnection connection = new SQLiteConnection(_dbFile))
+        //bool result = false;
+
+        //using (SQLiteConnection connection = new SQLiteConnection(_dbFile))
+        //{
+        //    connection.CreateTable<T>();
+        //    int rows = connection.Insert(item);
+        //    if (rows > 0)
+        //    {
+        //        result = true;
+        //    }
+        //}
+
+        //return result;
+
+        #endregion
+
+        var jsonBody = JsonConvert.SerializeObject(item);
+        var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+        using (var client = new HttpClient())
         {
-            connection.CreateTable<T>();
-            int rows = connection.Insert(item);
-            if (rows > 0)
-            {
-                result = true;
-            }
-        }
+           var result = await client.PostAsync($"{_dbPath}{item.GetType().Name.ToLower()}.json", content);
 
-        return result;
+           if (result.IsSuccessStatusCode)
+           {
+               return true;
+           }
+           else
+           {
+               return false;
+           }
+        }
     }
 
     public static bool Update<T>(T item)

@@ -73,7 +73,7 @@ public class NotesVM : INotifyPropertyChanged
         GetNotebooks();
     }
 
-    public void CreateNotebook()
+    public async void CreateNotebook()
     {
         Notebook newNotebook = new Notebook()
         {
@@ -81,12 +81,12 @@ public class NotesVM : INotifyPropertyChanged
             UserId = App.UserId
         };
 
-        DatabaseHelper.Insert(newNotebook);
+        await DatabaseHelper.Insert(newNotebook);
 
         GetNotebooks();
     }
 
-    public void CreateNote(int notebookId)
+    public async void CreateNote(int notebookId)
     {
         Note newNote = new Note()
         {
@@ -96,7 +96,7 @@ public class NotesVM : INotifyPropertyChanged
             Title = $"Note for {DateTime.Now.ToString()}"
         };
 
-        DatabaseHelper.Insert(newNote);
+        await DatabaseHelper.Insert(newNote);
 
         GetNotes();
     }
