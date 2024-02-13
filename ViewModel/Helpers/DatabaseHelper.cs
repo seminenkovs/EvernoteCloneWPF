@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Net.Http;
 using System.Text;
+using EvernoteCloneWPF.Model;
 using Newtonsoft.Json;
 using SQLite;
 
@@ -36,7 +37,8 @@ public class DatabaseHelper
 
         using (var client = new HttpClient())
         {
-           var result = await client.PostAsync($"{_dbPath}{item.GetType().Name.ToLower()}.json", content);
+           var result = await client.PostAsync(
+               $"{_dbPath}{item.GetType().Name.ToLower()}.json", content);
 
            if (result.IsSuccessStatusCode)
            {
@@ -83,16 +85,46 @@ public class DatabaseHelper
         return result;
     }
 
-    public static List<T> Read<T>() where T : new()
+    public static async Task<List<T>> Read<T>() where T : IHasId
     {
-        List<T> items;
+        #region SQLite
 
-        using (SQLiteConnection connection = new SQLiteConnection(_dbFile))
+        //List<T> items;
+
+        //using (SQLiteConnection connection = new SQLiteConnection(_dbFile))
+        //{
+        //    connection.CreateTable<T>();
+        //    items = connection.Table<T>().ToList();
+        //}
+
+        //return items;
+
+        #endregion
+
+        using (var client = new HttpClient())
         {
-            connection.CreateTable<T>();
-            items = connection.Table<T>().ToList();
-        }
+            var result = await client.GetAsync(
+                $"{_dbPath}{typeof(T).Name.ToLower()}.json");
+            var jsonResult = await result.Content.ReadAsStringAsync();
 
-        return items;
+            if (result.IsSuccessStatusCode)
+            {
+                var objects = JsonConvert.DeserializeObject<Dictionary<string, T>>(jsonResult);
+
+                List<T> list = new List<T>();
+                foreach (var o in objects)
+                {
+                    o.Value.Id = o.Key;
+                    list.Add(o.Value);
+                }
+
+                return list;
+            }
+            else
+            {
+                return null;
+            }
+            
+        }
     }
 }

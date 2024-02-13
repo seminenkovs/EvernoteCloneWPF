@@ -86,7 +86,7 @@ public class NotesVM : INotifyPropertyChanged
         GetNotebooks();
     }
 
-    public async void CreateNote(int notebookId)
+    public async void CreateNote(string notebookId)
     {
         Note newNote = new Note()
         {
@@ -101,9 +101,9 @@ public class NotesVM : INotifyPropertyChanged
         GetNotes();
     }
 
-    public void GetNotebooks()
+    public async void GetNotebooks()
     {
-        var notebooks = DatabaseHelper.Read<Notebook>()
+        var notebooks = (await DatabaseHelper.Read<Notebook>())
             .Where(n => n.UserId == App.UserId).ToList();
 
         Notebooks.Clear();
@@ -114,11 +114,11 @@ public class NotesVM : INotifyPropertyChanged
         }
     }
 
-    private void GetNotes()
+    private async void GetNotes()
     {
         if (SelectedNotebook != null)
         {
-            var notes = DatabaseHelper.Read<Note>()
+            var notes = (await DatabaseHelper.Read<Note>())
                 .Where(n => n.NoteBookId == SelectedNotebook.Id).ToList();
 
             Notes.Clear();
