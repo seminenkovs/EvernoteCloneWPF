@@ -90,8 +90,10 @@ public class DatabaseHelper
         }
     }
 
-    public static bool Delete<T>(T item)
+    public static async Task<bool> Delete<T>(T item) where T: IHasId
     {
+        #region SQLiteConnection
+
         bool result = false;
 
         using (SQLiteConnection connection = new SQLiteConnection(_dbFile))
@@ -105,6 +107,23 @@ public class DatabaseHelper
         }
 
         return result;
+
+        #endregion
+
+        using (var client = new HttpClient())
+        {
+            var res = await client.DeleteAsync(
+                $"{_dbPath}{item.GetType().Name.ToLower()}/{item.Id}.json");
+
+            if (res.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 
     public static async Task<List<T>> Read<T>() where T : IHasId
