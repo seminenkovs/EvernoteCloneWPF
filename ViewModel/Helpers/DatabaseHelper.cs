@@ -51,8 +51,10 @@ public class DatabaseHelper
         }
     }
 
-    public static bool Update<T>(T item)
+    public static async Task<bool> Update<T>(T item) where T : IHasId
     {
+        #region SQLiteConnection
+
         bool result = false;
 
         using (SQLiteConnection connection = new SQLiteConnection(_dbFile))
@@ -66,6 +68,26 @@ public class DatabaseHelper
         }
 
         return result;
+
+        #endregion
+
+        var jsonBody = JsonConvert.SerializeObject(item);
+        var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+        using (var client = new HttpClient())
+        {
+            var res = await client.PatchAsync(
+                $"{_dbPath}{item.GetType().Name.ToLower()}/{item.Id}.json", content);
+
+            if (res.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 
     public static bool Delete<T>(T item)
